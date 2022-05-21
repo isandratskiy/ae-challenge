@@ -44,4 +44,4 @@ jobs:
         if: always()
         with:
           name: report
-          path: test-result/report
+          path: test-result
