@@ -1,4 +1,3 @@
-import com.codeborne.selenide.Selenide;
 import extension.BaseSetup;
 import io.sandratskyi.challenge.fragments.Carousel;
 import org.junit.jupiter.api.*;
@@ -73,7 +72,7 @@ public class CarouselTest {
         });
     }
 
-    @Tag("smoke")
+    @Tag("regression")
     @DisplayName("it has unique color for each slide")
     @Test
     void shouldHaveUniqueColorForEachSlide() {
@@ -87,24 +86,6 @@ public class CarouselTest {
                 dots.size(), colors.size(),
                 "Have " + dots.size() + " slides but only " + colors.size() + " unique colors"
         );
-    }
-
-    @Tag("regression") //ADD COLORS TO SET
-    @TestFactory
-    Stream<DynamicTest> shouldHaveDifferentBackgroundColorForEachSlide() {
-        return carousel.controlDots.stream().skip(1).map(dot -> {
-            var current = getBackgroundColor(carousel.topSectionModule);
-            Selenide.screenshot("slide1" + current);
-            dot.click();
-            Selenide.sleep(5000);
-            var next = getBackgroundColor(carousel.topSectionModule);
-            Selenide.screenshot("slide2" + next);
-
-            return dynamicTest(
-                    "it change slide background color " + current + " to " + next,
-                    () -> assertNotEquals(current, next, "Background has same color")
-            );
-        });
     }
 
     @Tag("regression")

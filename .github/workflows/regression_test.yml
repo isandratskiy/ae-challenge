@@ -39,9 +39,3 @@ jobs:
         run: ./gradlew regression
         env:
           LOCALIZATION: ${{ matrix.localization }}
-
-      - uses: actions/upload-artifact@v2
-        if: always()
-        with:
-          name: report
-          path: test-result
