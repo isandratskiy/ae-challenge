@@ -26,6 +26,6 @@ jobs:
         uses: browser-actions/setup-chrome@latest
 
       - name: Run tests on site '${{ matrix.localization }}' l10n
-        run: ./gradle smoke
+        run: ./gradlew smoke
         env:
           LOCALIZATION: ${{ matrix.localization }}
