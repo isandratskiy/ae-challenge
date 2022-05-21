@@ -21,7 +21,6 @@ jobs:
           distribution: 'adopt'
 
       - uses: browser-actions/setup-chrome@latest
-        run: chrome --version
 
       - name: Run tests on site '${{ matrix.localization }}' l10n
         env:
