@@ -15,7 +15,6 @@ repositories {
 dependencies {
     implementation(libs.junit)
     implementation(libs.selenide)
-    implementation(libs.slf4j)
 }
 
 tasks.test {

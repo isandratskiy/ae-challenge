@@ -1,9 +1,7 @@
 [versions]
 junitVer = "5.8.2"
 selenideVer = "6.5.0"
-slf4jVer = "1.7.36"
 
 [libraries]
 junit = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junitVer" }
 selenide = { module = "com.codeborne:selenide", version.ref = "selenideVer" }
-slf4j = { module = "org.slf4j:slf4j-simple", version.ref = "slf4jVer" }
