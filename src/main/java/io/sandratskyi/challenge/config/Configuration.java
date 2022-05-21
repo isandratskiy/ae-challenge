@@ -19,8 +19,9 @@ public final class Configuration {
         timeout = 10000;
         browserSize = "1920x1080";
         baseUrl = "https://tunein.com";
-        screenshots = false;
+        screenshots = true;
         savePageSource = false;
         headless = true;
+        reportsFolder = "test-result/report";
     }
 }

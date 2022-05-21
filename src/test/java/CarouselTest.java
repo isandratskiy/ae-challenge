@@ -1,3 +1,4 @@
+import com.codeborne.selenide.Selenide;
 import extension.BaseSetup;
 import io.sandratskyi.challenge.fragments.Carousel;
 import org.junit.jupiter.api.*;
@@ -71,17 +72,19 @@ public class CarouselTest {
         });
     }
 
-    @Tag("regression")
+    @Tag("regression") //ADD COLORS TO SET
     @TestFactory
     Stream<DynamicTest> shouldHaveDifferentBackgroundColorForEachSlide() {
         return carousel.controlDots.stream().skip(1).map(dot -> {
             var current = getBackgroundColor(carousel.topSectionModule);
+            Selenide.screenshot("slide" + current);
             dot.click();
             var next = getBackgroundColor(carousel.topSectionModule);
+            Selenide.screenshot("slide" + next);
 
             return dynamicTest(
                     "it change slide background color " + current + " to " + next,
-                    () -> assertNotEquals(current, next, "Background with same color"));
+                    () -> assertNotEquals(current, next, "Background has same color"));
         });
     }
 
