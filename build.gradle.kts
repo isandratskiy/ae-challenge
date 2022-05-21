@@ -1,4 +1,5 @@
-import com.adarshr.gradle.testlogger.theme.ThemeType
+import com.adarshr.gradle.testlogger.theme.ThemeType.MOCHA
+import org.gradle.api.logging.LogLevel.LIFECYCLE
 
 plugins {
     id("java")
@@ -39,7 +40,7 @@ tasks {
 }
 
 testlogger {
-    theme = ThemeType.MOCHA
+    theme = MOCHA
     showExceptions = true
     showStackTraces = true
     showFullStackTraces = false
@@ -54,6 +55,6 @@ testlogger {
     showStandardStreams = false
     showPassedStandardStreams = false
     showSkippedStandardStreams = false
-    showFailedStandardStreams = true
-    logLevel = LogLevel.LIFECYCLE
+    showFailedStandardStreams = false
+    logLevel = LIFECYCLE
 }

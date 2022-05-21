@@ -1,14 +1,13 @@
 import extension.BaseSetup;
 import io.sandratskyi.challenge.fragments.Carousel;
+import io.sandratskyi.challenge.pages.HomePage;
 import org.junit.jupiter.api.*;
 
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static io.sandratskyi.challenge.pages.HomePage.atCarousel;
-import static io.sandratskyi.challenge.utils.CssUtils.getBackgroundColor;
-import static io.sandratskyi.challenge.utils.CssUtils.getColorAsHex;
+import static io.sandratskyi.challenge.utils.SelenideElementUtils.*;
+import static java.util.stream.Collectors.toSet;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
@@ -16,7 +15,7 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 @BaseSetup
 public class CarouselTest {
 
-    private final Carousel carousel = atCarousel();
+    private final Carousel carousel = HomePage.atCarousel();
 
     @Tag("smoke")
     @Tag("regression")
@@ -37,18 +36,19 @@ public class CarouselTest {
     @DisplayName("it has same urls for each text line")
     @Test
     void shouldHaveSameUrlsForEachTextLine() {
-        var urls = carousel.getTextLinesUniqueUrls();
+        var urls = getAllHrefValues(carousel.getAllTextLines());
 
-        assertEquals(1, urls.size(), "Have different urls in lines: " + urls);
+        assertEquals(1, urls.size(), "Has different urls in lines: " + urls);
     }
 
     @Tag("smoke")
     @DisplayName("it change text lines at next slide")
     @Test
     void shouldChangeTextLinesAtNextSlide() {
-        var currentTextLines = carousel.getCarouselTextLines().texts();
+        var currentTextLines = carousel.getAllTextLines().texts();
+
         carousel.controlDots.last().click();
-        var changedTextLines = carousel.getCarouselTextLines().texts();
+        var changedTextLines = carousel.getAllTextLines().texts();
 
         assertFalse(
                 currentTextLines.containsAll(changedTextLines),
@@ -61,13 +61,13 @@ public class CarouselTest {
     Stream<DynamicTest> shouldHaveSameUrlsForEachSlides() {
         return carousel.controlDots.stream().map(dot -> {
             dot.click();
-            var urls = carousel.getTextLinesUniqueUrls();
+            var urls = getAllHrefValues(carousel.getAllTextLines());
 
             return dynamicTest(
                     "it has the same URLs for all text lines " + urls,
                     () -> assertEquals(
                             1, urls.size(),
-                            "Have different urls in lines: " + urls
+                            "Has different urls in lines: " + urls
                     ));
         });
     }
@@ -77,14 +77,15 @@ public class CarouselTest {
     @Test
     void shouldHaveUniqueBackgroundColorForEachSlide() {
         var dots = carousel.controlDots;
+
         var colors = dots.stream().map(dot -> {
             dot.click();
             return getBackgroundColor(carousel.topSectionModule);
-        }).collect(Collectors.toSet());
+        }).collect(toSet());
 
         assertEquals(
                 dots.size(), colors.size(),
-                "Have " + dots.size() + " slides but only " + colors.size() + " unique colors"
+                "Has " + dots.size() + " slides but only " + colors.size() + " unique background colors"
         );
     }
 
@@ -92,9 +93,10 @@ public class CarouselTest {
     @TestFactory
     Stream<DynamicTest> shouldChangeTextLinesForEachSlide() {
         return carousel.controlDots.stream().skip(1).map(dot -> {
-            var currentTextLines = carousel.getCarouselTextLines().texts();
+            var currentTextLines = carousel.getAllTextLines().texts();
+
             dot.click();
-            var changedTextLines = carousel.getCarouselTextLines().texts();
+            var changedTextLines = carousel.getAllTextLines().texts();
 
             return dynamicTest(
                     "it change text from " + currentTextLines + " to " + changedTextLines,
@@ -108,12 +110,12 @@ public class CarouselTest {
     @Tag("regression")
     @TestFactory
     Stream<DynamicTest> shouldAcceptTextStylesForEachSlide() {
-        var slideNumber = new AtomicInteger(1);
+        var slideCounter = new AtomicInteger(1);
         return carousel.controlDots.stream().map(dot -> dynamicTest(
-                "it confirm text lines style for " + slideNumber.getAndIncrement() + " slide",
+                "it confirm text lines style for " + slideCounter.getAndIncrement() + " slide",
                 () -> {
                     dot.click();
-                    var textLines = carousel.getCarouselTextLines();
+                    var textLines = carousel.getAllTextLines();
 
                     var firstLine = getColorAsHex(textLines.get(0));
                     var secondLine = getColorAsHex(textLines.get(1));
