@@ -24,9 +24,8 @@ jobs:
 
       - name: Install Chrome
         uses: browser-actions/setup-chrome@latest
-        run: chrome --version
 
       - name: Run tests on site '${{ matrix.localization }}' l10n
+        run: ./gradle regression
         env:
           LOCALIZATION: ${{ matrix.localization }}
-        run: ./gradle regression
