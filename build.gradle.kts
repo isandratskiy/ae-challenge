@@ -42,7 +42,7 @@ tasks {
 testlogger {
     theme = ThemeType.MOCHA
     showExceptions = true
-    showStackTraces = false
+    showStackTraces = true
     showFullStackTraces = false
     showCauses = true
     slowThreshold = 1000
@@ -55,6 +55,6 @@ testlogger {
     showStandardStreams = false
     showPassedStandardStreams = false
     showSkippedStandardStreams = false
-    showFailedStandardStreams = false
+    showFailedStandardStreams = true
     logLevel = LogLevel.LIFECYCLE
 }
