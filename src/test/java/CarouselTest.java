@@ -4,6 +4,7 @@ import io.sandratskyi.challenge.fragments.Carousel;
 import org.junit.jupiter.api.*;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static io.sandratskyi.challenge.pages.HomePage.atCarousel;
@@ -72,6 +73,22 @@ public class CarouselTest {
         });
     }
 
+    @Tag("smoke")
+    @DisplayName("it has unique color for each slide")
+    @Test
+    void shouldHaveUniqueColorForEachSlide() {
+        var dots = carousel.controlDots;
+        var colors = dots.stream().map(dot -> {
+            dot.click();
+            return getBackgroundColor(carousel.topSectionModule);
+        }).collect(Collectors.toSet());
+
+        assertEquals(
+                dots.size(), colors.size(),
+                "Have " + dots.size() + " slides but only " + colors.size() + " unique colors"
+        );
+    }
+
     @Tag("regression") //ADD COLORS TO SET
     @TestFactory
     Stream<DynamicTest> shouldHaveDifferentBackgroundColorForEachSlide() {
@@ -79,12 +96,14 @@ public class CarouselTest {
             var current = getBackgroundColor(carousel.topSectionModule);
             Selenide.screenshot("slide1" + current);
             dot.click();
+            Selenide.sleep(5000);
             var next = getBackgroundColor(carousel.topSectionModule);
             Selenide.screenshot("slide2" + next);
 
             return dynamicTest(
                     "it change slide background color " + current + " to " + next,
-                    () -> assertNotEquals(current, next, "Background has same color"));
+                    () -> assertNotEquals(current, next, "Background has same color")
+            );
         });
     }
 
