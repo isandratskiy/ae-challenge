@@ -1,0 +1,29 @@
+name: Run UI Regression Tests
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-tune:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        localization: [ us, es ]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+
+      - uses: browser-actions/setup-chrome@latest
+        run: chrome --version
+
+      - name: Run tests on site '${{ matrix.localization }}' l10n
+        env:
+          LOCALIZATION: ${{ matrix.localization }}
+        run: ./gradle regression
