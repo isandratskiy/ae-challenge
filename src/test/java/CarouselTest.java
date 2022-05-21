@@ -77,10 +77,10 @@ public class CarouselTest {
     Stream<DynamicTest> shouldHaveDifferentBackgroundColorForEachSlide() {
         return carousel.controlDots.stream().skip(1).map(dot -> {
             var current = getBackgroundColor(carousel.topSectionModule);
-            Selenide.screenshot("slide" + current);
+            Selenide.screenshot("slide1" + current);
             dot.click();
             var next = getBackgroundColor(carousel.topSectionModule);
-            Selenide.screenshot("slide" + next);
+            Selenide.screenshot("slide2" + next);
 
             return dynamicTest(
                     "it change slide background color " + current + " to " + next,
