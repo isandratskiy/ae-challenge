@@ -15,6 +15,6 @@ public class SetupExtension implements BeforeEachCallback, BeforeAllCallback {
 
     @Override
     public void beforeEach(ExtensionContext context) {
-        HomePage.open("?lang=" + Configuration.getL10n() + "&homecarouselautoscroll=false");
+        HomePage.open("?lang=" + Configuration.getL10n() + "&abtestid=5015&homecarouselautoscroll=false");
     }
 }
