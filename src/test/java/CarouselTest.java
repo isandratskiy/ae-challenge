@@ -73,9 +73,9 @@ public class CarouselTest {
     }
 
     @Tag("regression")
-    @DisplayName("it has unique color for each slide")
+    @DisplayName("it has unique background color for each slide")
     @Test
-    void shouldHaveUniqueColorForEachSlide() {
+    void shouldHaveUniqueBackgroundColorForEachSlide() {
         var dots = carousel.controlDots;
         var colors = dots.stream().map(dot -> {
             dot.click();
