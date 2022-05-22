@@ -57,22 +57,6 @@ public class CarouselTest {
     }
 
     @Tag("regression")
-    @TestFactory
-    Stream<DynamicTest> shouldHaveSameUrlsForEachSlides() {
-        return carousel.controlDots.stream().map(dot -> {
-            dot.click();
-            var urls = getAllHrefValues(carousel.getAllTextLines());
-
-            return dynamicTest(
-                    "it has the same URLs for all text lines " + urls,
-                    () -> assertEquals(
-                            1, urls.size(),
-                            "Has different urls in lines: " + urls
-                    ));
-        });
-    }
-
-    @Tag("regression")
     @DisplayName("it has unique background color for each slide")
     @Test
     void shouldHaveUniqueBackgroundColorForEachSlide() {
@@ -87,6 +71,22 @@ public class CarouselTest {
                 dots.size(), colors.size(),
                 "Has " + dots.size() + " slides but only " + colors.size() + " unique background colors"
         );
+    }
+
+    @Tag("regression")
+    @TestFactory
+    Stream<DynamicTest> shouldHaveSameUrlsForEachSlide() {
+        return carousel.controlDots.stream().map(dot -> {
+            dot.click();
+            var urls = getAllHrefValues(carousel.getAllTextLines());
+
+            return dynamicTest(
+                    "it has the same URLs for all text lines " + urls,
+                    () -> assertEquals(
+                            1, urls.size(),
+                            "Has different urls in lines: " + urls
+                    ));
+        });
     }
 
     @Tag("regression")

@@ -22,6 +22,5 @@ public final class Configuration {
         screenshots = true;
         savePageSource = false;
         headless = true;
-        reportsFolder = "test-result/report";
     }
 }
