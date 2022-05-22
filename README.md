@@ -1,4 +1,4 @@
-# Automation challenge
+# Automation engineering challenge
 
 ## Pipelines
 
