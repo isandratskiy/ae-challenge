@@ -1,7 +1,12 @@
 import extension.BaseSetup;
+import extension.Regression;
+import extension.Smoke;
 import io.sandratskyi.challenge.fragments.Carousel;
 import io.sandratskyi.challenge.pages.HomePage;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestFactory;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
@@ -17,8 +22,8 @@ public class CarouselTest {
 
     private final Carousel carousel = HomePage.atCarousel();
 
-    @Tag("smoke")
-    @Tag("regression")
+    @Smoke
+    @Regression
     @DisplayName("it has logo with hero image at carousel")
     @Test
     void shouldHaveCarouselImages() {
@@ -32,7 +37,7 @@ public class CarouselTest {
         );
     }
 
-    @Tag("smoke")
+    @Smoke
     @DisplayName("it has same urls for each text line")
     @Test
     void shouldHaveSameUrlsForEachTextLine() {
@@ -41,7 +46,7 @@ public class CarouselTest {
         assertEquals(1, urls.size(), "Has different urls in lines: " + urls);
     }
 
-    @Tag("smoke")
+    @Smoke
     @DisplayName("it change text lines at next slide")
     @Test
     void shouldChangeTextLinesAtNextSlide() {
@@ -56,7 +61,7 @@ public class CarouselTest {
         );
     }
 
-    @Tag("regression")
+    @Regression
     @DisplayName("it has unique background color for each slide")
     @Test
     void shouldHaveUniqueBackgroundColorForEachSlide() {
@@ -73,7 +78,7 @@ public class CarouselTest {
         );
     }
 
-    @Tag("regression")
+    @Regression
     @TestFactory
     Stream<DynamicTest> shouldHaveSameUrlsForEachSlide() {
         return carousel.controlDots.stream().map(dot -> {
@@ -89,7 +94,7 @@ public class CarouselTest {
         });
     }
 
-    @Tag("regression")
+    @Regression
     @TestFactory
     Stream<DynamicTest> shouldChangeTextLinesForEachSlide() {
         return carousel.controlDots.stream().skip(1).map(dot -> {
@@ -107,7 +112,7 @@ public class CarouselTest {
         });
     }
 
-    @Tag("regression")
+    @Regression
     @TestFactory
     Stream<DynamicTest> shouldAcceptTextStylesForEachSlide() {
         var slideCounter = new AtomicInteger(1);

@@ -31,7 +31,9 @@
         │   ├── CarouselTest.java
         │   └── extension
         │       ├── BaseSetup.java
-        │       └── SetupExtension.java
+        │       ├── Regression.java
+        │       ├── SetupExtension.java
+        │       └── Smoke.java
         └── resources
 
 ```
